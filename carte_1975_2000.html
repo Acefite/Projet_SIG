@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_27cdb98c730eae31628c0d90db29d709 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div id="legend_Materials_(CONSTRUCTION)"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Materials (CONSTRUCTION)</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Steel<br>
+        </div>
+    <div id="legend_Ship_Type_(VESSEL_TYPE)"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Ship Type (VESSEL TYPE)</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Other<br>
+        
+        <i style="background:#9edae5;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Tanker<br>
+        </div>
+    <div id="legend_Cause_of_Loss"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Cause of Loss</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Foundered in storm<br>
+        
+        <i style="background:#9edae5;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Other<br>
+        </div>
+    
+<script>
+
+function hideLegends() {
+    document.querySelectorAll('[id^=legend_]').forEach(el => {
+        el.style.display = "none";
+    });
+}
+
+// Exécuter au chargement
+hideLegends();
+
+// Intercepter les clics dans le LayerControl
+document.addEventListener("change", function(e) {
+    if (e.target.classList.contains("leaflet-control-layers-selector")) {
+
+        hideLegends();
+
+        if (e.target.checked) {
+            // retrouver le nom du layer dans le label voisin
+            let label = e.target.nextSibling.innerText.trim();
+            let id = "legend_" + label.replaceAll(" ", "_");
+            let legendEl = document.getElementById(id);
+            if (legendEl) { legendEl.style.display = "block"; }
+        }
+    }
+});
+
+</script>
+    
+            <div class="folium-map" id="map_27cdb98c730eae31628c0d90db29d709" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_27cdb98c730eae31628c0d90db29d709 = L.map(
+                "map_27cdb98c730eae31628c0d90db29d709",
+                {
+                    center: [39.65425333333334, -72.74313333333333],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e433e043d22a31d2f38ef4e9247930a9 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e433e043d22a31d2f38ef4e9247930a9.addTo(map_27cdb98c730eae31628c0d90db29d709);
+        
+    
+            var feature_group_7e1b7adfc837a014e29d6f99aeb3aa45 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_9c31659f39676a79942d89406786676b = L.circleMarker(
+                [40.13583, -73.72666],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7e1b7adfc837a014e29d6f99aeb3aa45);
+        
+    
+        var popup_1ce284d9046ca7c3e10bfe24999900c2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a05ea7e8c7be201ec4b06fd1d744f32b = $(`<div id="html_a05ea7e8c7be201ec4b06fd1d744f32b" style="width: 100.0%; height: 100.0%;"><b>Beth Dee Bob</b><br>CONSTRUCTION: Steel</div>`)[0];
+                popup_1ce284d9046ca7c3e10bfe24999900c2.setContent(html_a05ea7e8c7be201ec4b06fd1d744f32b);
+            
+        
+
+        circle_marker_9c31659f39676a79942d89406786676b.bindPopup(popup_1ce284d9046ca7c3e10bfe24999900c2)
+        ;
+
+        
+    
+    
+            var circle_marker_343ec934894157ba5350cced572c2f8b = L.circleMarker(
+                [39.03333, -71.0],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7e1b7adfc837a014e29d6f99aeb3aa45);
+        
+    
+        var popup_0b7daf7f109717534a498fd8b36f882b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_074876a745092cc224b11af68d1ae26b = $(`<div id="html_074876a745092cc224b11af68d1ae26b" style="width: 100.0%; height: 100.0%;"><b>Spartan Lady</b><br>CONSTRUCTION: Steel</div>`)[0];
+                popup_0b7daf7f109717534a498fd8b36f882b.setContent(html_074876a745092cc224b11af68d1ae26b);
+            
+        
+
+        circle_marker_343ec934894157ba5350cced572c2f8b.bindPopup(popup_0b7daf7f109717534a498fd8b36f882b)
+        ;
+
+        
+    
+    
+            var circle_marker_3dfcf420911ba154ec81bca328b7cd66 = L.circleMarker(
+                [39.7936, -73.50274],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7e1b7adfc837a014e29d6f99aeb3aa45);
+        
+    
+        var popup_f9ad812cd727a6cba52a58726f45a629 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2ea9443b30e3276a7026c3cd8dc27c28 = $(`<div id="html_2ea9443b30e3276a7026c3cd8dc27c28" style="width: 100.0%; height: 100.0%;"><b>Thomas Hebert</b><br>CONSTRUCTION: Steel</div>`)[0];
+                popup_f9ad812cd727a6cba52a58726f45a629.setContent(html_2ea9443b30e3276a7026c3cd8dc27c28);
+            
+        
+
+        circle_marker_3dfcf420911ba154ec81bca328b7cd66.bindPopup(popup_f9ad812cd727a6cba52a58726f45a629)
+        ;
+
+        
+    
+    
+            var feature_group_3c17c132ed795ecb80122da9f7538b1d = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_e7aa8d7b7158103b6f8e77cf60323b35 = L.circleMarker(
+                [40.13583, -73.72666],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3c17c132ed795ecb80122da9f7538b1d);
+        
+    
+        var popup_a21514e5b923c33e8e8851d7402e0805 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ac25b043179369efcfa84c449cfca4de = $(`<div id="html_ac25b043179369efcfa84c449cfca4de" style="width: 100.0%; height: 100.0%;"><b>Beth Dee Bob</b><br>VESSEL TYPE: Other</div>`)[0];
+                popup_a21514e5b923c33e8e8851d7402e0805.setContent(html_ac25b043179369efcfa84c449cfca4de);
+            
+        
+
+        circle_marker_e7aa8d7b7158103b6f8e77cf60323b35.bindPopup(popup_a21514e5b923c33e8e8851d7402e0805)
+        ;
+
+        
+    
+    
+            var circle_marker_d2d38c2b2eea4d9aba13c7365d0a9542 = L.circleMarker(
+                [39.03333, -71.0],
+                {"bubblingMouseEvents": true, "color": "#9edae5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9edae5", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3c17c132ed795ecb80122da9f7538b1d);
+        
+    
+        var popup_507b69da3c6bd08293be8905094b1e03 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9d514491ca2691b5cb4230f1f39058a2 = $(`<div id="html_9d514491ca2691b5cb4230f1f39058a2" style="width: 100.0%; height: 100.0%;"><b>Spartan Lady</b><br>VESSEL TYPE: Tanker</div>`)[0];
+                popup_507b69da3c6bd08293be8905094b1e03.setContent(html_9d514491ca2691b5cb4230f1f39058a2);
+            
+        
+
+        circle_marker_d2d38c2b2eea4d9aba13c7365d0a9542.bindPopup(popup_507b69da3c6bd08293be8905094b1e03)
+        ;
+
+        
+    
+    
+            var circle_marker_7af9e3a05de157ff47b705eebe599fce = L.circleMarker(
+                [39.7936, -73.50274],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3c17c132ed795ecb80122da9f7538b1d);
+        
+    
+        var popup_688c8362e969be77654ab17bf93ac41e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_05f2c809d11a510088a64531f6dbb70b = $(`<div id="html_05f2c809d11a510088a64531f6dbb70b" style="width: 100.0%; height: 100.0%;"><b>Thomas Hebert</b><br>VESSEL TYPE: Other</div>`)[0];
+                popup_688c8362e969be77654ab17bf93ac41e.setContent(html_05f2c809d11a510088a64531f6dbb70b);
+            
+        
+
+        circle_marker_7af9e3a05de157ff47b705eebe599fce.bindPopup(popup_688c8362e969be77654ab17bf93ac41e)
+        ;
+
+        
+    
+    
+            var feature_group_7564f0ff0071f84d8d4271354978d5ed = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_700c6f77ceecd134fa1dfbc18da6e0e5 = L.circleMarker(
+                [40.13583, -73.72666],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7564f0ff0071f84d8d4271354978d5ed);
+        
+    
+        var popup_733c73c7d21a68bb12f104e3a98294e1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5637c93da8ddf922082577e3584e4908 = $(`<div id="html_5637c93da8ddf922082577e3584e4908" style="width: 100.0%; height: 100.0%;"><b>Beth Dee Bob</b><br>CAUSE OF LOSS: Foundered in storm</div>`)[0];
+                popup_733c73c7d21a68bb12f104e3a98294e1.setContent(html_5637c93da8ddf922082577e3584e4908);
+            
+        
+
+        circle_marker_700c6f77ceecd134fa1dfbc18da6e0e5.bindPopup(popup_733c73c7d21a68bb12f104e3a98294e1)
+        ;
+
+        
+    
+    
+            var circle_marker_2b22254f8645fc9a304d6ec0dcd90b0e = L.circleMarker(
+                [39.03333, -71.0],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7564f0ff0071f84d8d4271354978d5ed);
+        
+    
+        var popup_e9f4d05d18484788e119c1dc417058d8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ec6a8988d25a4258c607722f40c7977d = $(`<div id="html_ec6a8988d25a4258c607722f40c7977d" style="width: 100.0%; height: 100.0%;"><b>Spartan Lady</b><br>CAUSE OF LOSS: Foundered in storm</div>`)[0];
+                popup_e9f4d05d18484788e119c1dc417058d8.setContent(html_ec6a8988d25a4258c607722f40c7977d);
+            
+        
+
+        circle_marker_2b22254f8645fc9a304d6ec0dcd90b0e.bindPopup(popup_e9f4d05d18484788e119c1dc417058d8)
+        ;
+
+        
+    
+    
+            var circle_marker_bbe83c32e4b44a7b54592c6e025e1043 = L.circleMarker(
+                [39.7936, -73.50274],
+                {"bubblingMouseEvents": true, "color": "#9edae5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9edae5", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_7564f0ff0071f84d8d4271354978d5ed);
+        
+    
+        var popup_111b41a1548697197067a92468c1cbbb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fc5c8de64bf6a29f86a7bf5d4e3525e1 = $(`<div id="html_fc5c8de64bf6a29f86a7bf5d4e3525e1" style="width: 100.0%; height: 100.0%;"><b>Thomas Hebert</b><br>CAUSE OF LOSS: Other</div>`)[0];
+                popup_111b41a1548697197067a92468c1cbbb.setContent(html_fc5c8de64bf6a29f86a7bf5d4e3525e1);
+            
+        
+
+        circle_marker_bbe83c32e4b44a7b54592c6e025e1043.bindPopup(popup_111b41a1548697197067a92468c1cbbb)
+        ;
+
+        
+    
+    
+            var layer_control_f474b581c0fe5e1700bcd6c9e7f68e34_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_e433e043d22a31d2f38ef4e9247930a9,
+                },
+                overlays :  {
+                    "Materials (CONSTRUCTION)" : feature_group_7e1b7adfc837a014e29d6f99aeb3aa45,
+                    "Ship Type (VESSEL TYPE)" : feature_group_3c17c132ed795ecb80122da9f7538b1d,
+                    "Cause of Loss" : feature_group_7564f0ff0071f84d8d4271354978d5ed,
+                },
+            };
+            let layer_control_f474b581c0fe5e1700bcd6c9e7f68e34 = L.control.layers(
+                layer_control_f474b581c0fe5e1700bcd6c9e7f68e34_layers.base_layers,
+                layer_control_f474b581c0fe5e1700bcd6c9e7f68e34_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_27cdb98c730eae31628c0d90db29d709);
+
+        
+    
+            tile_layer_e433e043d22a31d2f38ef4e9247930a9.addTo(map_27cdb98c730eae31628c0d90db29d709);
+        
+</script>
+</html>

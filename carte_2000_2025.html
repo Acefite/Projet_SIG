@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_add262bbbc2a19c73bb51b61a6dcb583 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div id="legend_Materials_(CONSTRUCTION)"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Materials (CONSTRUCTION)</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Other<br>
+        
+        <i style="background:#9edae5;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Unknown<br>
+        </div>
+    <div id="legend_Ship_Type_(VESSEL_TYPE)"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Ship Type (VESSEL TYPE)</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Other<br>
+        </div>
+    <div id="legend_Cause_of_Loss"
+         style="display:none;
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                z-index:9999;
+                background-color: white;
+                border:2px solid grey;
+                padding:10px;
+                font-size:13px;">
+    <b>Cause of Loss</b><br>
+    
+        <i style="background:#1f77b4;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Burned<br>
+        
+        <i style="background:#9edae5;
+                  width:12px;height:12px;
+                  float:left;margin-right:6px;"></i>Unknown<br>
+        </div>
+    
+<script>
+
+function hideLegends() {
+    document.querySelectorAll('[id^=legend_]').forEach(el => {
+        el.style.display = "none";
+    });
+}
+
+// Exécuter au chargement
+hideLegends();
+
+// Intercepter les clics dans le LayerControl
+document.addEventListener("change", function(e) {
+    if (e.target.classList.contains("leaflet-control-layers-selector")) {
+
+        hideLegends();
+
+        if (e.target.checked) {
+            // retrouver le nom du layer dans le label voisin
+            let label = e.target.nextSibling.innerText.trim();
+            let id = "legend_" + label.replaceAll(" ", "_");
+            let legendEl = document.getElementById(id);
+            if (legendEl) { legendEl.style.display = "block"; }
+        }
+    }
+});
+
+</script>
+    
+            <div class="folium-map" id="map_add262bbbc2a19c73bb51b61a6dcb583" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_add262bbbc2a19c73bb51b61a6dcb583 = L.map(
+                "map_add262bbbc2a19c73bb51b61a6dcb583",
+                {
+                    center: [39.079635, -73.35263499999999],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c193b623dc7493fbeeeebefb27ffea32 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c193b623dc7493fbeeeebefb27ffea32.addTo(map_add262bbbc2a19c73bb51b61a6dcb583);
+        
+    
+            var feature_group_3521b8d1bd9e678d5848018ef01368ad = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_fd451b74f5e5f61265526a4d3cba3620 = L.circleMarker(
+                [39.75733, -73.46194],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3521b8d1bd9e678d5848018ef01368ad);
+        
+    
+        var popup_365dc669068bfaf8e31a7f524515cecc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9ea14932c070caf413a7d740d32eb2fc = $(`<div id="html_9ea14932c070caf413a7d740d32eb2fc" style="width: 100.0%; height: 100.0%;"><b>Reel E Bugging</b><br>CONSTRUCTION: Other</div>`)[0];
+                popup_365dc669068bfaf8e31a7f524515cecc.setContent(html_9ea14932c070caf413a7d740d32eb2fc);
+            
+        
+
+        circle_marker_fd451b74f5e5f61265526a4d3cba3620.bindPopup(popup_365dc669068bfaf8e31a7f524515cecc)
+        ;
+
+        
+    
+    
+            var circle_marker_22cba3bb3ef1c80867e348b0b0aba043 = L.circleMarker(
+                [38.40194, -73.24333],
+                {"bubblingMouseEvents": true, "color": "#9edae5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9edae5", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_3521b8d1bd9e678d5848018ef01368ad);
+        
+    
+        var popup_237a61fa556ef82fd9c41e238ac23ecb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bee2b18b761bc5edfc7664a2d92ea6ae = $(`<div id="html_bee2b18b761bc5edfc7664a2d92ea6ae" style="width: 100.0%; height: 100.0%;"><b>Viking II</b><br>CONSTRUCTION: Unknown</div>`)[0];
+                popup_237a61fa556ef82fd9c41e238ac23ecb.setContent(html_bee2b18b761bc5edfc7664a2d92ea6ae);
+            
+        
+
+        circle_marker_22cba3bb3ef1c80867e348b0b0aba043.bindPopup(popup_237a61fa556ef82fd9c41e238ac23ecb)
+        ;
+
+        
+    
+    
+            var feature_group_4dee582c7600fd31ffad11c38e188f00 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_59973fc7f54d27ee0c8f1d383f2dfd1f = L.circleMarker(
+                [39.75733, -73.46194],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4dee582c7600fd31ffad11c38e188f00);
+        
+    
+        var popup_374f44a3230fd5f5f879fa95d656b4de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3aa7860248ca12ba745f6268dbc032b4 = $(`<div id="html_3aa7860248ca12ba745f6268dbc032b4" style="width: 100.0%; height: 100.0%;"><b>Reel E Bugging</b><br>VESSEL TYPE: Other</div>`)[0];
+                popup_374f44a3230fd5f5f879fa95d656b4de.setContent(html_3aa7860248ca12ba745f6268dbc032b4);
+            
+        
+
+        circle_marker_59973fc7f54d27ee0c8f1d383f2dfd1f.bindPopup(popup_374f44a3230fd5f5f879fa95d656b4de)
+        ;
+
+        
+    
+    
+            var circle_marker_0ff22d73f803f441040494a1d98a58ab = L.circleMarker(
+                [38.40194, -73.24333],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_4dee582c7600fd31ffad11c38e188f00);
+        
+    
+        var popup_891cab06a9ec3bb68b7073f33114ab2f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c79c333a2dc1e094d0a9c1469d0aa0c6 = $(`<div id="html_c79c333a2dc1e094d0a9c1469d0aa0c6" style="width: 100.0%; height: 100.0%;"><b>Viking II</b><br>VESSEL TYPE: Other</div>`)[0];
+                popup_891cab06a9ec3bb68b7073f33114ab2f.setContent(html_c79c333a2dc1e094d0a9c1469d0aa0c6);
+            
+        
+
+        circle_marker_0ff22d73f803f441040494a1d98a58ab.bindPopup(popup_891cab06a9ec3bb68b7073f33114ab2f)
+        ;
+
+        
+    
+    
+            var feature_group_f75003f458d72a4cbf149b99cf59b001 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_081845f776cff5fe429c00416d850eea = L.circleMarker(
+                [39.75733, -73.46194],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f75003f458d72a4cbf149b99cf59b001);
+        
+    
+        var popup_3976634542b9597a0ebc789df75f3df3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5b1ad4606d33d21e5ea3d061195f4bc5 = $(`<div id="html_5b1ad4606d33d21e5ea3d061195f4bc5" style="width: 100.0%; height: 100.0%;"><b>Reel E Bugging</b><br>CAUSE OF LOSS: Burned</div>`)[0];
+                popup_3976634542b9597a0ebc789df75f3df3.setContent(html_5b1ad4606d33d21e5ea3d061195f4bc5);
+            
+        
+
+        circle_marker_081845f776cff5fe429c00416d850eea.bindPopup(popup_3976634542b9597a0ebc789df75f3df3)
+        ;
+
+        
+    
+    
+            var circle_marker_d7eb9941f450bb56a3a086361a63bf55 = L.circleMarker(
+                [38.40194, -73.24333],
+                {"bubblingMouseEvents": true, "color": "#9edae5", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9edae5", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f75003f458d72a4cbf149b99cf59b001);
+        
+    
+        var popup_d428bc71682944077262adee1edb8c4a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3ac577b427eb64acdca216c269fb33d2 = $(`<div id="html_3ac577b427eb64acdca216c269fb33d2" style="width: 100.0%; height: 100.0%;"><b>Viking II</b><br>CAUSE OF LOSS: Unknown</div>`)[0];
+                popup_d428bc71682944077262adee1edb8c4a.setContent(html_3ac577b427eb64acdca216c269fb33d2);
+            
+        
+
+        circle_marker_d7eb9941f450bb56a3a086361a63bf55.bindPopup(popup_d428bc71682944077262adee1edb8c4a)
+        ;
+
+        
+    
+    
+            var layer_control_b732a3e7a4e8aa2ab77b6b2ef7b0b7cd_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_c193b623dc7493fbeeeebefb27ffea32,
+                },
+                overlays :  {
+                    "Materials (CONSTRUCTION)" : feature_group_3521b8d1bd9e678d5848018ef01368ad,
+                    "Ship Type (VESSEL TYPE)" : feature_group_4dee582c7600fd31ffad11c38e188f00,
+                    "Cause of Loss" : feature_group_f75003f458d72a4cbf149b99cf59b001,
+                },
+            };
+            let layer_control_b732a3e7a4e8aa2ab77b6b2ef7b0b7cd = L.control.layers(
+                layer_control_b732a3e7a4e8aa2ab77b6b2ef7b0b7cd_layers.base_layers,
+                layer_control_b732a3e7a4e8aa2ab77b6b2ef7b0b7cd_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_add262bbbc2a19c73bb51b61a6dcb583);
+
+        
+    
+            tile_layer_c193b623dc7493fbeeeebefb27ffea32.addTo(map_add262bbbc2a19c73bb51b61a6dcb583);
+        
+</script>
+</html>
